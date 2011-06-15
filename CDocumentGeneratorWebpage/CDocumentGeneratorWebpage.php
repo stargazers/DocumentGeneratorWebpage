@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 	require 'CHTML/CHTML.php';
+	require 'CForm/CForm.php';
 
 	// ************************************************** 
 	//  CDocumentGeneratorWebpage
@@ -33,8 +34,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		private $cHTML;
 		private $current_page;
 
+		// ************************************************** 
+		//  __construct
+		/*!
+			@brief Initializes class private variables
+		*/
+		// ************************************************** 
 		public function __construct()
 		{
+			/*
+			print_r( $_POST );
+			print_r( $_FILES );
+			*/
 			$possible_pages = array( 'main', 'about' );
 			$this->current_page = 'main';
 
@@ -54,15 +65,76 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		public function createPage()
 		{
 			$this->cHTML = new CHTML();
+
 			$c = $this->cHTML;
 			$c->setCSS( 'main.css' );
 
 			$str = $c->createSiteTop( 'Document generator' );
 			$str .= $this->createTopLogo();
 			$str .= $this->createTopMenu();
+			$str .= $this->createPageContent();
 			$str .= $c->createSiteBottom();
 
 			echo $str;
+		}
+
+		// ************************************************** 
+		//  createPageContent
+		/*!
+			@brief Detects what page should be created
+			  and then calls the correct method which
+			  will create the required page.
+		*/
+		// ************************************************** 
+		private function createPageContent()
+		{
+			switch( $this->current_page )
+			{
+				case 'main':
+					$ret = $this->createPageMain();
+					break;
+
+				case 'about';
+					$ret = $this->createPageAbout();
+					break;
+			}
+
+			return $ret;
+		}
+
+		// ************************************************** 
+		//  createPageMain
+		/*!
+			@brief Creates actual content for page 'Main'
+			@return HTML String
+		*/
+		// ************************************************** 
+		private function createPageMain()
+		{
+			$c = $this->cHTML;
+			$cForm = new CForm( 'index', 'file' );
+			$cForm->addFileButton( 'Select file...', 'file_select' );
+			$cForm->addSubmit( 'Create document', 'submit' );
+			$form = $cForm->createForm();
+			
+			$text = 'Select the file for document generating.';
+			$p = $c->createP( $text );
+			$c->setExtraParams( array( 'class' => 'site_content' ) );
+			$div = $c->createDiv( $p . $form );
+
+			return $div;
+		}
+
+		// ************************************************** 
+		//  createPageAbout
+		/*!
+			@brief Creates actual content for page 'About'
+			@return HTML String
+		*/
+		// ************************************************** 
+		private function createPageAbout()
+		{
+
 		}
 
 		// ************************************************** 

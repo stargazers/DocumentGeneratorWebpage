@@ -33,7 +33,7 @@
 {
 	font-family: 'BonvenoCF';
 	width: 80%;
-	margin-top: 1em;
+	margin-top: 0.5em;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
@@ -41,8 +41,8 @@
 
 .top_menu_item a:link, .top_menu_item a:visited
 {
-	margin-right: 0.3em;
-	padding: 1em;
+	margin-right: 0.5em;
+	padding: 0.5em;
 	padding-left: 0.3em;
 	padding-right: 0.3em;
 	font-size: 1.5em;
@@ -52,8 +52,8 @@
 
 .top_menu_item_selected a:link, .top_menu_item_selected a:visited
 {
-	margin-right: 0.3em;
-	padding: 1em;
+	margin-right: 0.5em;
+	padding: 0.5em;
 	padding-left: 0.3em;
 	padding-right: 0.3em;
 	font-size: 1.5em;
@@ -64,4 +64,26 @@
 .top_menu_item a:hover, .top_menu_item_selected a:hover
 {
 	background-color: gray;
+}
+
+.site_content
+{
+	margin: auto;
+	margin-top: 1em;
+	width: 37em;
+	border-top: 1px solid black;
+	padding: 1em;
+}
+
+.site_content p, .site_content table, .site_content input
+{
+	font-family: 'BonvenoCF';
+}
+
+.site_content input[type=submit]
+{
+	background-color: white;
+	margin-top: 2em;
+	border: 1px solid black;
+	color: red;
 }
