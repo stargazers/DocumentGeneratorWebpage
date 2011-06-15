@@ -230,6 +230,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				'http://s.runosydan.net/nmYi',
 				'Click here to see an example output' );
 
+			$c->setExtraParams( array( 'target' => '_blank' ) );
+			$github_url = $c->createLink(
+				'https://github.com/stargazers/DocumentGeneratorWebpage',
+				'Sourcecodes in GitHub' );
+
 			$author = 'Written by Aleksi Räsänen, 2011.';
 			$author_email = $c->createLink( 
 				'mailto:aleksi.rasanen@runosydan.net',
@@ -273,6 +278,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 			$text = $c->createH( 1, 'Example output' );
 			$text .= $example_output;
+			$text .= $c->createH( 1, 'Sourcecodes' );
+			$text .= $github_url;
 			$text .= $c->createH( 1, 'Author' );
 			$text .= $c->createP( $author );
 			$text .= $author_email;
