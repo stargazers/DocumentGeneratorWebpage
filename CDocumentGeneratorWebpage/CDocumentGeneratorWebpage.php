@@ -176,7 +176,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			$c = $this->cHTML;
 			$c->setExtraParams( array( 'target' => '_new' ) );
 			$link = $c->createLink( $this->documents_path . $this->generated_filename,
-				'Click her to see generated document' );
+				'Click here to see generated document' );
 
 			$text = $c->createP( 'Your document has been generated.' );
 			$c->setExtraParams( array( 'class' => 'site_content' ) );
@@ -217,7 +217,53 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		// ************************************************** 
 		private function createPageAbout()
 		{
+			$c = $this->cHTML;
+			$about = 'Document generator is very simple source code documentation tool. '
+				. 'It uses Doxygen styled tags, but it is not as versatile as Doxygen is. '
+				. 'I was too lazy to create Doxyfiles so I made a own document generator '
+				. 'what does not require any configuration files. Later I made this '
+				. 'website where I can just send files which have commented correctly '
+				. 'and it will generate a documentation file for me.';
 
+			$about2 = 'Note that this documentation tool does not check anything about '
+				. 'your code except is current comment block for class, private mehod '
+				. 'or public method. It does not check if the functions exists or not, it '
+				. 'just reads comments from code and generate documents based on '
+				. 'those without caring if params are wrong or missing.';
+
+			$privacy = 'This web tool stores sent source file, so DO NOT SEND ANYTHING '
+				. 'that you don\'t have permissions to share. Personally I am NOT '
+				. 'interested about your codes, so I don\'t care what kind of code you '
+				. 'are writing and I don\'t share them, but if this server is hacked '
+				. 'then those codes might be found by others. So use this web tool to '
+				. 'generate documentations only for Free Softare/Open source apps. '
+				. 'Another alternative is to get this whole site source codes and put '
+				. 'them running on your own network. All source codes are licensed '
+				. 'under GNU AGPL, so feel free to use it.';
+
+			$tags = 'Currently we support tags: @brief, @param, @return, @author, '
+				. '@email and @license.';
+
+			$example = '// ********************' . "\n"
+				. '// @brief Test method '. "\n"
+				. '// @param $foo Parameter called foo ' . "\n"
+				. '// @return HTML String ' . "\n"
+				. '// ********************' . "\n"
+				. 'private function testMetod( $foo )';
+
+			$text = $c->createH( 1, 'About' );
+			$text .= $c->createP( $about );
+			$text .= $c->createP( $about2 );
+			$text .= $c->createH( 1, 'Privacy' );
+			$text .= $c->createP( $privacy );
+			$text .= $c->createH( 1, 'Tags' );
+			$text .= $c->createP( $tags );
+			$text .= $c->createH( 1, 'Example formatting style' );
+			$text .= $c->createPre( $example );
+
+			$c->setExtraParams( array( 'class' => 'about_site_content' ) );
+			$div = $c->createDiv( $text );
+			return $div;
 		}
 
 		// ************************************************** 

@@ -66,7 +66,7 @@
 	background-color: gray;
 }
 
-.site_content
+.site_content, .about_site_content
 {
 	margin: auto;
 	margin-top: 1em;
@@ -75,9 +75,15 @@
 	padding: 1em;
 }
 
-.site_content p, .site_content table, .site_content input
+.site_content p, .site_content table, .site_content input,
+.about_site_content
 {
 	font-family: 'BonvenoCF';
+}
+
+.about_site_content p, .about_site_content pre
+{
+	margin-left: 1.5em;
 }
 
 .site_content input[type=submit]
@@ -86,4 +92,10 @@
 	margin-top: 2em;
 	border: 1px solid black;
 	color: red;
+	padding: 0.8em;
+}
+
+h1
+{
+	font-family: 'Marketingscript';
 }
