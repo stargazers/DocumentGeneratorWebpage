@@ -88,13 +88,14 @@
 	margin-left: 1.5em;
 }
 
-.about_site_content a:link, .about_site_content a:visited
+a:link, a:visited
 {
 	color: blue;
 	text-decoration: none;
+	font-family: 'BonvenoCF';
 }
 
-.about_site_content a:hover
+a:hover
 {
 	color: red;
 }
