@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	require 'CHTML/CHTML.php';
 	require 'CForm/CForm.php';
+	require 'CHTMLDocumentGenerator/CHTMLDocumentGenerator.php';
+	require 'CGeneral/CGeneral.php';
 
 	// ************************************************** 
 	//  CDocumentGeneratorWebpage
@@ -33,6 +35,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	{
 		private $cHTML;
 		private $current_page;
+		private $post_params;
+		private $files_params;
+		private $generated_document;
+		private $generated_filename;
+		private $documents_path;
 
 		// ************************************************** 
 		//  __construct
@@ -42,10 +49,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		// ************************************************** 
 		public function __construct()
 		{
-			/*
-			print_r( $_POST );
-			print_r( $_FILES );
-			*/
+			$this->post_params = $_POST;
+			$this->files_params = $_FILES;
+			$this->generated_document = '';
+			$this->documents_path = 'generated_documents/';
+
 			$possible_pages = array( 'main', 'about' );
 			$this->current_page = 'main';
 
@@ -54,6 +62,56 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				if( in_array( $_GET['page'], $possible_pages ) )
 					$this->current_page = $_GET['page'];
 			}
+
+			$ret = $this->handleFilesParams();
+			if(! empty( $ret ) )
+			{
+				$filename = $this->writeDocumentToFile( $ret );
+				$this->generated_filename = $filename;
+				$this->current_page = 'document';
+			}
+		}
+
+		// ************************************************** 
+		//  writeDocumentToFile
+		/*!
+			@brief Write generated document to the file
+			@param $document Generated HTML document
+			@return Filename in string
+		*/
+		// ************************************************** 
+		private function writeDocumentToFile( $document )
+		{
+			$cGeneral = new CGeneral();
+			$random_string = time() . $cGeneral->createRandomString( 4 );
+
+			$fh = fopen( $this->documents_path . $random_string . '.html', 'w' );
+			fwrite( $fh, $document );
+			fclose( $fh );
+
+			return $random_string . '.html';
+		}
+
+		// ************************************************** 
+		//  handleFilesParams
+		/*!
+			@brief Checks if there was files sent. If so,
+				generate document for sent file.
+
+			@return If there was file sent, we return a 
+			  HTML document. Otherwise we return empty string.
+		*/
+		// ************************************************** 
+		private function handleFilesParams()
+		{
+			if(! isset( $this->files_params['file_select']['tmp_name'] ) )
+				return;
+
+			$filename = $this->files_params['file_select']['tmp_name'];
+			$cHTMLDocumentGenerator = new CHTMLDocumentGenerator( $filename );
+			$document = $cHTMLDocumentGenerator->createHTMLDocument();
+			
+			return $document;
 		}
 
 		// ************************************************** 
@@ -90,6 +148,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{
 			switch( $this->current_page )
 			{
+				case 'document':
+					$ret = $this->createPageShowDocument();
+					break;
+
 				case 'main':
 					$ret = $this->createPageMain();
 					break;
@@ -100,6 +162,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			}
 
 			return $ret;
+		}
+
+
+		// ************************************************** 
+		//  createPageShowDocument
+		/*!
+			@brief Shows generated document
+		*/
+		// ************************************************** 
+		private function createPageShowDocument()
+		{
+			$c = $this->cHTML;
+			$c->setExtraParams( array( 'target' => '_new' ) );
+			$link = $c->createLink( $this->documents_path . $this->generated_filename,
+				'Click her to see generated document' );
+
+			$text = $c->createP( 'Your document has been generated.' );
+			$c->setExtraParams( array( 'class' => 'site_content' ) );
+			$div = $c->createDiv( $text . $link );
+
+			return $div;
 		}
 
 		// ************************************************** 
