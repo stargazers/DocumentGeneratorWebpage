@@ -179,7 +179,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		private function createPageShowDocument()
 		{
 			$c = $this->cHTML;
-			$c->setExtraParams( array( 'target' => '_new' ) );
+			$c->setExtraParams( array( 'target' => '_blank' ) );
 			$link = $c->createLink( $this->documents_path 
 				. $this->generated_filename,
 				'Click here to see generated document' );
