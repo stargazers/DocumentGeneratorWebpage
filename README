@@ -1,0 +1,27 @@
+Document generator webpage
+===========================
+
+	Description:
+		A website for generating documentation from source codes.
+		Source code must have Doxygen-styled commentings.
+
+	Another requirements:
+		This website requires many classes (all are freely available).
+		- CForm for form generation,
+		  https://github.com/stargazers/CForm
+		- CHTML for page generation,
+		  https://github.com/stargazers/CHTML
+		- CHTMLDocumentGenerator for generating HTML output 
+		  from parsed source code,
+		  https://github.com/stargazers/CHTMLDocumentGenerator
+		- CDocumentation for parsing source files,
+		  https://github.com/stargazers/CDocumentation
+		- CGeneral for generating random strings,
+		  https://github.com/stargazers/CGeneral
+
+	License:
+		GNU AGPL v3
+
+	Author:
+		Aleksi Räsänen, 2011
+		aleksi.rasanen@runosydan.net
