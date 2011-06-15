@@ -138,8 +138,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			$str .= $this->createPageContent();
 			$str .= $c->createSiteBottom();
 
-			$html = $c->createDiv( $str );
-			return $html;
+			return $str;
 		}
 
 		// ************************************************** 
@@ -226,14 +225,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{
 			$c = $this->cHTML;
 
-			$c->setExtraParams( array( 'target' => '__new' ) );
+			$c->setExtraParams( array( 'target' => '_blank' ) );
 			$example_output = $c->createLink(
 				'http://s.runosydan.net/nmYi',
 				'Click here to see an example output' );
 
 			$author = 'Written by Aleksi Räsänen, 2011.';
 			$author_email = $c->createLink( 
-				'mailto: aleksi.rasanen@runosydan.net',
+				'mailto:aleksi.rasanen@runosydan.net',
 				'aleksi.rasanen@runosydan.net' );
 
 			$license = 'GNU AGPL v3';
