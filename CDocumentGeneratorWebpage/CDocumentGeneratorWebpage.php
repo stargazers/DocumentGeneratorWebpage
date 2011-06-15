@@ -85,7 +85,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			$cGeneral = new CGeneral();
 			$random_string = time() . $cGeneral->createRandomString( 4 );
 
-			$fh = fopen( $this->documents_path . $random_string . '.html', 'w' );
+			$fh = fopen( $this->documents_path . $random_string 
+				. '.html', 'w' );
 			fwrite( $fh, $document );
 			fclose( $fh );
 
@@ -107,8 +108,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			if(! isset( $this->files_params['file_select']['tmp_name'] ) )
 				return;
 
+			if( empty( $this->files_params['file_select']['tmp_name'] ) )
+				return;
+
 			$filename = $this->files_params['file_select']['tmp_name'];
-			$cHTMLDocumentGenerator = new CHTMLDocumentGenerator( $filename );
+			$cHTMLDocumentGenerator = new CHTMLDocumentGenerator( 
+				$filename );
 			$document = $cHTMLDocumentGenerator->createHTMLDocument();
 			
 			return $document;
@@ -133,7 +138,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			$str .= $this->createPageContent();
 			$str .= $c->createSiteBottom();
 
-			echo $str;
+			$html = $c->createDiv( $str );
+			return $html;
 		}
 
 		// ************************************************** 
@@ -218,31 +224,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		private function createPageAbout()
 		{
 			$c = $this->cHTML;
-			$about = 'Document generator is very simple source code documentation tool. '
-				. 'It uses Doxygen styled tags, but it is not as versatile as Doxygen is. '
-				. 'I was too lazy to create Doxyfiles so I made a own document generator '
-				. 'what does not require any configuration files. Later I made this '
-				. 'website where I can just send files which have commented correctly '
-				. 'and it will generate a documentation file for me.';
 
-			$about2 = 'Note that this documentation tool does not check anything about '
-				. 'your code except is current comment block for class, private mehod '
-				. 'or public method. It does not check if the functions exists or not, it '
-				. 'just reads comments from code and generate documents based on '
-				. 'those without caring if params are wrong or missing.';
+			$author = 'Written by Aleksi Räsänen, 2011.';
+			$author_email = $c->createLink( 
+				'mailto: aleksi.rasanen@runosydan.net',
+				'aleksi.rasanen@runosydan.net' );
 
-			$privacy = 'This web tool stores sent source file, so DO NOT SEND ANYTHING '
-				. 'that you don\'t have permissions to share. Personally I am NOT '
-				. 'interested about your codes, so I don\'t care what kind of code you '
-				. 'are writing and I don\'t share them, but if this server is hacked '
-				. 'then those codes might be found by others. So use this web tool to '
-				. 'generate documentations only for Free Softare/Open source apps. '
-				. 'Another alternative is to get this whole site source codes and put '
-				. 'them running on your own network. All source codes are licensed '
-				. 'under GNU AGPL, so feel free to use it.';
+			$license = 'GNU AGPL v3';
+			$about = 'Document generator is very simple source code '
+				. 'documentation tool. It uses Doxygen styled tags, '
+				. 'but it is not as versatile as Doxygen is. '
+				. 'I was too lazy to create Doxyfiles so I made a own '
+				. 'document generator what does not require any '
+				. 'configuration files. Later I made this '
+				. 'website where I can just send files which have '
+				. 'commented correctly and it will generate a '
+				. 'documentation file for me.';
 
-			$tags = 'Currently we support tags: @brief, @param, @return, @author, '
-				. '@email and @license.';
+			$about2 = 'Note that this documentation tool does not '
+				. 'check anything about your code except is current '
+				. 'comment block for class, private mehod or public '
+				. 'method. It does not check if the functions exists '
+				. 'or not, it just reads comments from code and '
+				. 'generate documents based on those without caring if '
+				. 'params are wrong or missing.';
+
+			$privacy = 'This web tool stores sent source file, '
+				. 'so DO NOT SEND ANYTHING that you don\'t have '
+				. 'permissions to share. Personally I am NOT '
+				. 'interested about your codes, so I don\'t care what '
+				. 'kind of code you are writing and I don\'t share them, '
+				. 'but if this server is hacked then those codes might '
+				. 'be found by others. So use this web tool to '
+				. 'generate documentations only for Free Softare/Open '
+				. 'source apps. Another alternative is to get this '
+				. 'whole site source codes and put '
+				. 'them running on your own network. All source codes '
+				. 'are licensed under GNU AGPL, so feel free to use it.';
+
+			$tags = 'Currently we support tags: @brief, @param, '
+				. '@return, @author, @email and @license.';
 
 			$example = '// ********************' . "\n"
 				. '// @brief Test method '. "\n"
@@ -251,7 +272,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				. '// ********************' . "\n"
 				. 'private function testMetod( $foo )';
 
-			$text = $c->createH( 1, 'About' );
+			$text = $c->createH( 1, 'Author' );
+			$text .= $c->createP( $author );
+			$text .= $author_email;
+			$text .= $c->createH( 1, 'License' );
+			$text .= $c->createP( $license );
+			$text .= $c->createH( 1, 'About' );
 			$text .= $c->createP( $about );
 			$text .= $c->createP( $about2 );
 			$text .= $c->createH( 1, 'Privacy' );

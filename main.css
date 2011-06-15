@@ -19,6 +19,7 @@
 			url( 'http://stargazers.nor.fi/fonts/bonvenocf/BonvenoCF-Light-webfont.ttf' ) 
 			format('truetype');
 } 
+
 #top_logo
 {
 	font-family: 'Marketingscript';
@@ -81,7 +82,8 @@
 	font-family: 'BonvenoCF';
 }
 
-.about_site_content p, .about_site_content pre
+.about_site_content p, .about_site_content pre,
+.about_site_content a:link, .about_site_content a:visited
 {
 	margin-left: 1.5em;
 }

@@ -19,6 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	require 'CDocumentGeneratorWebpage/CDocumentGeneratorWebpage.php';
 	$cDocumentGeneratorWebpage = new CDocumentGeneratorWebpage;
-	$cDocumentGeneratorWebpage->createPage();
+	echo $cDocumentGeneratorWebpage->createPage();
 
 ?>
