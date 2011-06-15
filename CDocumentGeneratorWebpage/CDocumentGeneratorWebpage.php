@@ -181,7 +181,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{
 			$c = $this->cHTML;
 			$c->setExtraParams( array( 'target' => '_new' ) );
-			$link = $c->createLink( $this->documents_path . $this->generated_filename,
+			$link = $c->createLink( $this->documents_path 
+				. $this->generated_filename,
 				'Click here to see generated document' );
 
 			$text = $c->createP( 'Your document has been generated.' );
@@ -225,6 +226,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{
 			$c = $this->cHTML;
 
+			$c->setExtraParams( array( 'target' => '__new' ) );
+			$example_output = $c->createLink(
+				'http://s.runosydan.net/nmYi',
+				'Click here to see an example output' );
+
 			$author = 'Written by Aleksi Räsänen, 2011.';
 			$author_email = $c->createLink( 
 				'mailto: aleksi.rasanen@runosydan.net',
@@ -249,18 +255,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				. 'generate documents based on those without caring if '
 				. 'params are wrong or missing.';
 
-			$privacy = 'This web tool stores sent source file, '
-				. 'so DO NOT SEND ANYTHING that you don\'t have '
-				. 'permissions to share. Personally I am NOT '
-				. 'interested about your codes, so I don\'t care what '
-				. 'kind of code you are writing and I don\'t share them, '
-				. 'but if this server is hacked then those codes might '
-				. 'be found by others. So use this web tool to '
-				. 'generate documentations only for Free Softare/Open '
-				. 'source apps. Another alternative is to get this '
-				. 'whole site source codes and put '
-				. 'them running on your own network. All source codes '
-				. 'are licensed under GNU AGPL, so feel free to use it.';
+			$privacy = 'This web tool does not store sent source file, '
+				. 'it only reads its content and generates the '
+				. 'document. If you still do not want to send any '
+				. 'files here, just download all the sources from '
+				. 'github to your own server and run this softare '
+				. 'on your own server.';
 
 			$tags = 'Currently we support tags: @brief, @param, '
 				. '@return, @author, @email and @license.';
@@ -272,7 +272,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				. '// ********************' . "\n"
 				. 'private function testMetod( $foo )';
 
-			$text = $c->createH( 1, 'Author' );
+			$text = $c->createH( 1, 'Example output' );
+			$text .= $example_output;
+			$text .= $c->createH( 1, 'Author' );
 			$text .= $c->createP( $author );
 			$text .= $author_email;
 			$text .= $c->createH( 1, 'License' );
